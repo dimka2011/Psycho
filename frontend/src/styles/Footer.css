@@ -1,0 +1,50 @@
+.asp-footer {
+    margin-top: auto; /* Это заставляет футер прижиматься к низу */
+    padding: 30px 20px;
+    background-color: var(--bg-main);
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 0.85rem;
+    color: #444;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.copyright {
+    margin: 0;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.tagline {
+    margin: 0;
+    color: #666;
+}
+
+.footer-links {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.footer-links a {
+    color: #555;
+    transition: color 0.2s;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    color: var(--text-bright);
+}
+
+.separator {
+    color: #333;
+}

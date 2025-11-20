@@ -1,0 +1,223 @@
+/* Стили специфичные для Home страницы */
+
+.asp-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Основной контент */
+.asp-content {
+    flex: 1;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+}
+
+.intro-section {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.main-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+
+.sub-title {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Сетка интерфейса */
+.interface-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 30px;
+    align-items: stretch;
+}
+
+/* Общие стили блоков */
+.interface-block {
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border);
+    padding: 35px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px; /* Небольшое скругление */
+}
+
+.block-header {
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 20px;
+}
+
+.block-header h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.block-header p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Стили формы (левый блок) */
+.asp-form {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.asp-form textarea {
+    flex-grow: 1;
+    background-color: #080808;
+    border: 1px solid var(--border);
+    color: var(--text-bright);
+    padding: 20px;
+    font-family: inherit;
+    font-size: 1rem;
+    resize: none;
+    min-height: 220px;
+    margin-bottom: 25px;
+    transition: border-color 0.3s;
+}
+
+.asp-form textarea:focus {
+    border-color: var(--text-muted);
+}
+
+.form-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+.status-indicator {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--success);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.4);
+}
+
+/* Правый блок (библиотека) */
+.library-block {
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+.library-block:hover {
+    border-color: var(--text-muted);
+}
+
+.tags-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+.tag {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    transition: color 0.2s;
+}
+
+.library-block:hover .tag {
+    color: var(--text-bright);
+    border-color: #555;
+}
+
+/* Кнопки действий */
+.action-btn {
+    padding: 14px 30px;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: transform 0.2s ease;
+}
+
+.action-btn.primary {
+    background-color: var(--text-bright);
+    color: var(--bg-main);
+}
+
+.action-btn.primary:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.action-btn.primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.action-btn.secondary {
+    background-color: transparent;
+    border: 1px solid var(--text-bright);
+    color: var(--text-bright);
+    width: 100%;
+    margin-top: auto;
+    text-align: center;
+}
+
+.action-btn.secondary:hover {
+    background-color: var(--text-bright);
+    color: var(--bg-main);
+}
+
+/* Футер */
+.asp-footer {
+    margin-top: auto;
+    padding: 30px;
+    text-align: center;
+    color: #333;
+    font-size: 0.8rem;
+    border-top: 1px solid #111;
+}
+
+/* Адаптив */
+@media (max-width: 900px) {
+    .interface-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .main-title {
+        font-size: 2rem;
+    }
+    
+    .asp-navbar {
+        padding: 15px 20px;
+    }
+    
+    .interface-block {
+        padding: 25px;
+    }
+}

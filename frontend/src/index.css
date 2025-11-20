@@ -1,0 +1,55 @@
+/* Глобальные переменные и сброс стилей */
+:root {
+  --bg-main: #000000;       /* Абсолютный черный */
+  --bg-panel: #111111;      /* Темно-серый для блоков */
+  --text-bright: #ffffff;   /* Белый */
+  --text-muted: #888888;    /* Серый текст */
+  --border: #333333;        /* Цвет границ */
+  --success: #00ff41;       /* Акцент успешного статуса */
+  --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Базовый сброс */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-main);
+  color: var(--text-bright);
+  font-family: var(--font-main);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Общие стили для кнопок, чтобы они были одинаковыми везде */
+button {
+  font-family: var(--font-main);
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Убираем дефолтное подчеркивание ссылок */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+/* ... твои предыдущие стили в index.css ... */
+
+/* Layout для всего приложения */
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Занимаем минимум всю высоту экрана */
+}
+
+.content-wrap {
+    flex: 1; /* Заставляет контент занимать всё доступное место, толкая футер вниз */
+    display: flex;
+    flex-direction: column; /* Чтобы вложенные страницы тоже могли использовать flex */
+}

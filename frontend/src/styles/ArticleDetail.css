@@ -1,0 +1,249 @@
+.article-detail-page {
+    padding: 40px 20px;
+    width: 100%;
+    /* Максимально широкая колонка для комфортного чтения */
+    max-width: 900px; 
+    margin: 0 auto;
+    color: var(--text-bright);
+}
+
+.article-content-wrapper {
+    padding: 0;
+}
+
+/* Кнопка "Назад" */
+.back-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    margin-bottom: 40px;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.back-btn:hover {
+    border-color: var(--text-bright);
+    color: var(--text-bright);
+}
+
+/* Заголовок и краткое описание */
+.article-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.article-excerpt {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+/* Метаданные (Время, Теги) */
+.article-meta-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+    margin-bottom: 40px;
+    font-size: 0.9rem;
+}
+
+.meta-time {
+    color: #666;
+    font-weight: 600;
+}
+
+.meta-tags {
+    display: flex;
+    gap: 10px;
+}
+
+.meta-tag {
+    color: var(--text-muted);
+    background-color: #1a1a1a;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+.article-separator {
+    height: 1px;
+    background-color: var(--border);
+    margin-bottom: 40px;
+}
+
+/* Тело статьи */
+.article-body {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #ccc;
+}
+
+.article-body p {
+    margin-bottom: 1.5em;
+    /* Ограничение ширины строки для лучшей читаемости */
+    max-width: 80ch; 
+}
+
+/* Состояния загрузки/ошибки */
+.article-detail-page.loading-state,
+.article-detail-page.error-state {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.error-state h1 {
+    color: #e74c3c; /* Красный цвет для ошибки */
+    font-size: 2rem;
+}
+
+.back-to-list-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: var(--bg-panel);
+    border: 1px solid var(--text-bright);
+    color: var(--text-bright);
+    cursor: pointer;
+}
+.article-body {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #ccc;
+    /* Убираем p, т.к. текст теперь генерируется с тегами h1, p, ul и т.д. */
+}
+
+/* Стили для элементов внутри статьи (Отображение форматирования) */
+
+/* Параграфы (переопределяем для лучшей читаемости) */
+.article-body p {
+    margin-bottom: 1.5em;
+    max-width: 80ch; 
+    /* наследует font-size и line-height от .article-body */
+}
+
+/* Заголовки */
+.article-body h1,
+.article-body h2,
+.article-body h3 {
+    color: var(--text-bright);
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    line-height: 1.3;
+}
+.article-body h1 {
+    font-size: 2.2rem;
+}
+.article-body h2 {
+    font-size: 1.8rem;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid var(--border);
+}
+.article-body h3 {
+    font-size: 1.5rem;
+}
+
+/* Списки */
+.article-body ul, 
+.article-body ol {
+    margin: 1em 0 1.5em 0;
+    padding-left: 2em;
+    max-width: 80ch; 
+}
+.article-body li {
+    margin-bottom: 0.5em;
+}
+
+/* Выделение текста */
+.article-body strong,
+.article-body b {
+    color: var(--text-bright);
+    font-weight: bold;
+}
+.article-body em,
+.article-body i {
+    font-style: italic;
+}
+
+/* Цитаты */
+.article-body blockquote {
+    border-left: 4px solid var(--color-accent); /* Акцентный цвет для полосы */
+    padding-left: 20px;
+    margin: 2em 0;
+    font-style: italic;
+    color: var(--text-muted);
+}
+
+/* Изображения */
+.article-body img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 2em auto; /* Отцентрировать изображение и добавить отступы */
+    border-radius: 4px;
+    /* Можно добавить тень, если хотите, чтобы они выделялись */
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); */
+}
+
+/* Блоки кода (если используется) */
+.article-body pre {
+    background-color: #1a1a1a;
+    color: #f8f8f2;
+    padding: 15px;
+    border-radius: 4px;
+    overflow-x: auto;
+    max-width: 80ch; 
+}
+.article-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    width: 100%;
+}
+
+.admin-actions {
+    display: flex;
+    gap: 10px; /* Расстояние между кнопками админа */
+}
+
+/* Кнопка "Редактировать" (осталась прежней) */
+.edit-article-btn {
+    background-color: var(--color-accent); /* Используйте ваш акцентный цвет */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.edit-article-btn:hover {
+    background-color: #2980b9; /* Чуть темнее акцент */
+}
+
+/* 🗑️ СТИЛЬ КНОПКИ УДАЛЕНИЯ */
+.delete-article-btn {
+    background-color: #c0392b; /* Красный цвет для опасного действия */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.delete-article-btn:hover {
+    background-color: #e74c3c; /* Светлее при наведении */
+}
