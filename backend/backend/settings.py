@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api',
     'articles',
+    'chat',
     'rest_framework_simplejwt',
     'rest_framework',
     "corsheaders",
@@ -100,10 +101,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'psycho',
-        'USER': 'root',
+        'USER': 'admin',
         'PASSWORD': '1357913579dfv',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'HOST': '95.165.9.173',
+        'PORT': '3307',
     }
 }
 
@@ -128,8 +129,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
-
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+ADMIN_MEDIA_PREFIX = '/static/admin/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWS_CREDENTIALS = True

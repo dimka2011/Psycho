@@ -10,6 +10,7 @@ import NotFound from './pages/NotFound';
 import ArticleForm from './pages/ArticleForm';
 import PsychDashboard from './pages/PsychDashboard';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import ChatView from './components/ChatView';
 // Компонент для защиты маршрутов
 const ProtectedRoute = ({ children, requiredRole }) => {
     const { user, isPsychologist } = useAuth();
@@ -38,8 +39,8 @@ function AppRoutes() {
             <Routes>
                 {/* 1. УСЛОВНЫЙ КОРНЕВОЙ МАРШРУТ */}
                 <Route path="/" element={RootComponent} /> 
-                
-                {/* 2. ПУБЛИЧНЫЕ МАРШРУТЫ */}
+                <Route path='/dashboard' element={<ChatView />} />
+                <Route path='/chat' element={<ChatView />} />
                 <Route path="/articles" element={<Articles />} />
                 <Route path="/articles/:articleId" element={<ArticleDetail />} /> 
                 <Route path="/login" element={<Login />} />

@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
             try {
                 // Используем исправленную функцию импорта
                 const decoded = jwtDecode(token);
-                
+                console.log(decoded)
                 // Проверяем, что токен не истек
                 const currentTime = Date.now() / 1000;
                 if (decoded.exp > currentTime) {
@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
                     setUser({
                         email: decoded.email, 
                         is_psychologist: decoded.is_psychologist || false,
+                        id: decoded.user_id
                     });
                 } else {
                     // Токен истек

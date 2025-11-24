@@ -32,7 +32,7 @@ const Navbar = () => {
                 {user ? (
                     // Если пользователь залогинен, показываем кнопку "Выход"
                     <button onClick={handleLogout} className="nav-btn logout-btn">
-                        Выход ({user.email})
+                        Выход
                     </button>
                 ) : (
                     // Если не залогинен, показываем кнопку "Вход"
