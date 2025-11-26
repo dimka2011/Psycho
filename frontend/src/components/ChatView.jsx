@@ -15,6 +15,7 @@ const ChatView = () => {
 
     // Рендерим нужный интерфейс в зависимости от роли
     return (
+        // ⬅️ Этот класс теперь имеет min-height: calc(100vh - XXpx)
         <div className="chat-container-page">
             <h1 className="chat-main-title">
                 {isPsychologist ? 'Панель управления чатами' : 'Ваш анонимный чат'}

@@ -13,7 +13,6 @@ const ArticleDetail = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // ... (useEffect остается без изменений) ...
     useEffect(() => {
         if (!articleId) {
             setLoading(false);
@@ -41,7 +40,7 @@ const ArticleDetail = () => {
                 setLoading(false);
             }
         };
-
+        console.log(error)
         fetchArticle();
     }, [articleId]); 
 
@@ -74,12 +73,23 @@ const ArticleDetail = () => {
     };
 
 
-    // --- Условный рендеринг состояний (без изменений) ---
     if (loading) {
-        // ...
+        return (
+            <div className="article-detail-page loading-state">
+                <p>Загружаем полный текст статьи...</p>
+            </div>
+        );
     }
     if (error || !article) {
-        // ...
+        return (
+            <div className="article-detail-page error-state">
+                <h1>{error ? 'Ошибка' : 'Статья не найдена'}</h1>
+                <p>{error || 'Запрашиваемый материал отсутствует в базе.'}</p>
+                <button onClick={() => navigate('/articles')} className="back-to-list-btn">
+                    К списку статей
+                </button>
+            </div>
+        );
     }
 
     // --- Основной рендеринг ---
@@ -103,8 +113,6 @@ const ArticleDetail = () => {
                         </div>
                     )}
                 </div>
-
-                {/* ... (Заголовок, описание, метаданные) ... */}
                 <h1 className="article-title">{article.title}</h1>
                 <p className="article-excerpt">{article.excerpt}</p>
                 

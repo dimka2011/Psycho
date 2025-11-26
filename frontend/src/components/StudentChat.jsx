@@ -2,20 +2,28 @@ import React, { useState, useEffect, useRef } from 'react';
 import api from '../api';
 import { useAuth } from '../context/AuthContext';
 
+const LoadingPlaceholder = ({ text }) => (
+    <div className="chat-placeholder chat-loading-state">
+        <div className="spinner"></div>
+        <p>{text}</p>
+    </div>
+);
+
 const StudentChat = () => {
     const { user } = useAuth();
     const [chatId, setChatId] = useState(null);
     const [messages, setMessages] = useState([]);
     const [content, setContent] = useState('');
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true); 
+    const [messagesLoading, setMessagesLoading] = useState(false); 
     const [isInitiating, setIsInitiating] = useState(false);
     const messagesEndRef = useRef(null);
 
     // 1. Загрузка активного чата ученика
     useEffect(() => {
         const fetchActiveChat = async () => {
+            setLoading(true); 
             try {
-                // Эндпоинт /v1/chats/ для ученика возвращает его активный чат (или пустой список)
                 const response = await api.get('/v1/chats/');
                 if (response.data && response.data.length > 0) {
                     setChatId(response.data[0].id);
@@ -23,7 +31,7 @@ const StudentChat = () => {
             } catch (err) {
                 console.error("Ошибка загрузки активного чата:", err);
             } finally {
-                setLoading(false);
+                setLoading(false); 
             }
         };
         fetchActiveChat();
@@ -34,16 +42,19 @@ const StudentChat = () => {
         if (!chatId) return;
 
         const fetchMessages = async () => {
+            setMessagesLoading(true); 
             try {
                 const response = await api.get(`/v1/chats/${chatId}/messages/`);
                 setMessages(response.data);
             } catch (err) {
                 console.error("Ошибка загрузки сообщений:", err);
+            } finally {
+                setMessagesLoading(false); 
             }
         };
 
         fetchMessages();
-        // ⬅️ Исправлено: Устанавливаем опрос (polling) для обновления сообщений на 60 секунд
+        // Устанавливаем опрос (polling) для обновления сообщений на 60 секунд
         const intervalId = setInterval(fetchMessages, 60000); 
 
         return () => clearInterval(intervalId);
@@ -51,7 +62,11 @@ const StudentChat = () => {
     
     // Прокрутка вниз при получении новых сообщений
     useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        // ⬅️ ИСПРАВЛЕНИЕ ПРОКРУТКИ: Используем block: 'end', чтобы прокручивался только контейнер сообщений
+        messagesEndRef.current?.scrollIntoView({ 
+            behavior: "smooth", 
+            block: 'end' 
+        });
     }, [messages]);
 
 
@@ -66,11 +81,10 @@ const StudentChat = () => {
             
             setChatId(response.data.id);
             
-            // Поскольку первое сообщение отправлено, добавляем его в список
             setMessages([{ 
                 id: 1, 
                 chat: response.data.id, 
-                sender_id: user.id, // ID текущего пользователя (Ученика)
+                sender_id: user.id,
                 content: content, 
                 timestamp: new Date().toISOString()
             }]);
@@ -103,7 +117,6 @@ const StudentChat = () => {
         
         try {
             await api.post(`/v1/chats/${chatId}/send_message/`, { content: messageContent });
-            // Сообщения будут обновлены через polling
         } catch (err) {
             alert("Не удалось отправить сообщение.");
             console.error(err);
@@ -112,13 +125,13 @@ const StudentChat = () => {
     };
 
 
-    // --- РЕНДЕРИНГ: ИНИЦИАЛИЗАЦИЯ / АКТИВНЫЙ ЧАТ ---
+    // --- РЕНДЕРИНГ: ЗАГРУЗКА ---
     if (loading) {
-        return <div className="chat-placeholder">Проверка наличия активного чата...</div>;
+        return <LoadingPlaceholder text="Проверка наличия активного чата..." />;
     }
 
+    // --- РЕНДЕРИНГ: ИНИЦИАЛИЗАЦИЯ ---
     if (!chatId) {
-        // ... (Форма инициализации остается без изменений) ...
         return (
             <div className="initiate-chat-form">
                 <h2>Напишите свою проблему анонимно</h2>
@@ -129,7 +142,7 @@ const StudentChat = () => {
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
                         placeholder="Опишите вашу проблему..."
-                        rows="8"
+                        rows="8" 
                         required
                         disabled={isInitiating}
                     />
@@ -141,6 +154,7 @@ const StudentChat = () => {
         );
     }
 
+    // --- РЕНДЕРИНГ: АКТИВНЫЙ ЧАТ ---
     return (
         <div className="chat-window">
             <div className="chat-header">
@@ -149,15 +163,18 @@ const StudentChat = () => {
             </div>
 
             <div className="messages-list">
+                {messagesLoading && messages.length === 0 && (
+                    <LoadingPlaceholder text="Загрузка сообщений..." />
+                )}
+                
                 {messages.map((msg) => (
                     <div 
                         key={msg.id} 
-                        // ⬅️ Логика отправки: Если sender_id совпадает с ID текущего ученика
-                        className={`message-bubble ${msg.sender_id === user.id ? 'sent' : 'received'}`}
+                        // ⬅️ Используем двойное равно для сравнения ID
+                        className={`message-bubble ${msg.sender_id == user.id ? 'sent' : 'received'}`}
                     >
                         <span className="message-time">
-                            {/* ⬅️ Исправлено: Четкое обозначение отправителя */}
-                            **{msg.sender_id === user.id ? 'Вы' : 'Психолог'}** - {new Date(msg.timestamp).toLocaleTimeString()}
+                            **{msg.sender_id == user.id ? 'Вы' : 'Психолог'}** - {new Date(msg.timestamp).toLocaleTimeString()}
                             {msg.is_sending && ' (отправка...)'}
                         </span>
                         <p>{msg.content}</p>
@@ -171,7 +188,7 @@ const StudentChat = () => {
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
                     placeholder="Напишите ответ..."
-                    rows="2"
+                    rows="2" // Внешняя высота теперь задается через CSS min-height
                     required
                 />
                 <button type="submit" disabled={!content.trim()}>

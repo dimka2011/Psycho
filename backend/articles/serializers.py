@@ -62,7 +62,7 @@ class PostCreateUpdateSerializer(serializers.ModelSerializer):
             tags_to_set = []
             for name in tag_names:
                 # Получаем существующий или создаем новый тег
-                tag, created = Tag.objects.get_or_create(name=name)
+                tag, created = Tag.objects.get_or_create(name=name.capitalize())
                 tags_to_set.append(tag)
             
             # Привязываем теги к посту
