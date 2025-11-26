@@ -1,23 +1,53 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import api from '../api';
 import '../styles/Home.css'; 
 
 const Home = () => {
     const [problemText, setProblemText] = useState('');
     const [isAnalyzing, setIsAnalyzing] = useState(false);
+    // Состояние для результатов поиска
+    const [foundArticles, setFoundArticles] = useState(null); 
     const navigate = useNavigate();
 
     const handleSearchSubmit = async (e) => {
         e.preventDefault();
         if (!problemText.trim()) return;
+
         setIsAnalyzing(true);
-        // ... логика ...
-        setTimeout(() => { setIsAnalyzing(false); alert('Анализ...'); }, 1500);
+        setFoundArticles(null); // Сбрасываем старые результаты
+
+        try {
+            // 1. Отправляем запрос к ИИ
+            // Используем /v1/articles/ai-search/ (проверьте ваш префикс в api.js)
+            const response = await api.post('/v1/articles/ai-search/', {
+                query: problemText
+            });
+
+            // 2. Если статьи найдены
+            if (response.data && response.data.length > 0) {
+                setFoundArticles(response.data);
+            } else {
+                // 3. Если ничего не найдено - предлагаем чат (пустой массив)
+                setFoundArticles([]); 
+            }
+
+        } catch (error) {
+            console.error("Ошибка анализа:", error);
+            // В случае ошибки можно показать пустой результат или сообщение
+            setFoundArticles([]); 
+        } finally {
+            setIsAnalyzing(false);
+        }
+    };
+
+    // Функция для перехода к регистрации в чат
+    const goToChatRegistration = () => {
+        // Сюда можно передать текст проблемы через state, чтобы не вводить заново
+        navigate('/register-student', { state: { initialProblem: problemText } });
     };
 
     return (
-        // Убрали asp-container, так как layout теперь в App.jsx
-        // Можно оставить просто div или фрагмент
         <> 
             <main className="asp-content">
                 <div className="intro-section">
@@ -38,7 +68,7 @@ const Home = () => {
                         
                         <form onSubmit={handleSearchSubmit} className="asp-form">
                             <textarea 
-                                placeholder="Напиши здесь, что случилось..."
+                                placeholder="Напиши здесь, что случилось (например: 'Я очень устал от учебы')..."
                                 value={problemText}
                                 onChange={(e) => setProblemText(e.target.value)}
                                 disabled={isAnalyzing}
@@ -52,29 +82,62 @@ const Home = () => {
                                 </button>
                             </div>
                         </form>
+
+                        {/* БЛОК РЕЗУЛЬТАТОВ ИИ */}
+                        {foundArticles !== null && (
+                            <div className="ai-results-area">
+                                {foundArticles.length > 0 ? (
+                                    <>
+                                        <h4 className="ai-results-title">Я нашел похожие ситуации в базе:</h4>
+                                        <div className="found-articles-list">
+                                            {foundArticles.map(article => (
+                                                <div 
+                                                    key={article.id} 
+                                                    className="found-article-item"
+                                                    onClick={() => navigate(`/articles/${article.id}`)}
+                                                >
+                                                    <h5>{article.title}</h5>
+                                                    <p>{article.excerpt}</p>
+                                                    <span>Читать &rarr;</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div className="ai-divider">или</div>
+                                        <button onClick={goToChatRegistration} className="chat-suggest-btn">
+                                            Ситуация сложнее? Написать психологу
+                                        </button>
+                                    </>
+                                ) : (
+                                    <div className="ai-no-results">
+                                        <p>Похожих статей не найдено.</p>
+                                        <button onClick={goToChatRegistration} className="chat-suggest-btn primary">
+                                            Начать анонимный чат с психологом
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
                     </div>
 
                     <div className="interface-block library-block" onClick={() => navigate('/articles')}>
+                        {/* ... (правая колонка без изменений) ... */}
                         <div className="block-header">
                             <h3>📖 База знаний</h3>
                             <p>Почитать статьи о том, как справляться с трудностями.</p>
                         </div>
-                        
                         <div className="tags-cloud">
                             <span className="tag">Учёба</span>
                             <span className="tag">Стресс</span>
                             <span className="tag">Отношения</span>
                             <span className="tag">Самооценка</span>
                         </div>
-
                         <button className="action-btn secondary">
                             Открыть все статьи
                         </button>
                     </div>
                 </div>
             </main>
-            
-            {/* FOOTER УДАЛЕН ОТСЮДА */}
         </>
     );
 };

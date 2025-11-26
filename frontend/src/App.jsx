@@ -11,6 +11,7 @@ import ArticleForm from './pages/ArticleForm';
 import PsychDashboard from './pages/PsychDashboard';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import ChatView from './components/ChatView';
+import RegisterStudent from './pages/RegisterStudent';
 // Компонент для защиты маршрутов
 const ProtectedRoute = ({ children, requiredRole }) => {
     const { user, isPsychologist } = useAuth();
@@ -44,6 +45,7 @@ function AppRoutes() {
                 <Route path="/articles" element={<Articles />} />
                 <Route path="/articles/:articleId" element={<ArticleDetail />} /> 
                 <Route path="/login" element={<Login />} />
+                <Route path="/register-student" element={<RegisterStudent />} />
                 
                 {/* 3. ЗАЩИЩЕННЫЕ МАРШРУТЫ ДЛЯ ПСИХОЛОГА */}
                 <Route path="/dashboard" element={

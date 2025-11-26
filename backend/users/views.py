@@ -4,7 +4,50 @@ from django.db.models import Q
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import exceptions, serializers
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.permissions import AllowAny
+from .models import User
+from .serializers import UserSerializer # Убедитесь, что он есть
+import uuid
 
+class RegisterStudentView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        password = request.data.get('password')
+        
+        if not password:
+            return Response({"detail": "Пароль обязателен."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            # Генерируем уникальный токен (как в вашей модели: uuid hex укороченный)
+            # Используем цикл для гарантии уникальности
+            token = uuid.uuid4().hex[:10]
+            while User.objects.filter(token=token).exists():
+                token = uuid.uuid4().hex[:10]
+
+            # Создаем пользователя
+            # Email оставляем пустым или генерируем фейковый, если он обязателен в вашей БД
+            # (В вашей модели email уникален, поэтому если он обязателен, придется генерировать уникальную заглушку)
+            fake_email = f"{token}@student.asp" 
+            
+            user = User.objects.create_user(
+                email=fake_email, 
+                password=password,
+                token=token
+            )
+            
+            # Возвращаем токен, чтобы показать его ученику
+            return Response({
+                "token": token,
+                "detail": "Аккаунт успешно создан."
+            }, status=status.HTTP_201_CREATED)
+
+        except Exception as e:
+            print(e)
+            return Response({"detail": "Ошибка при создании аккаунта."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     # Оставляем поле email, так как оно используется для унифицированного ввода
     email = serializers.CharField(required=True) 

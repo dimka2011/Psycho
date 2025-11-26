@@ -221,3 +221,98 @@
         padding: 25px;
     }
 }
+.ai-results-area {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--border);
+    animation: fadeIn 0.5s ease;
+}
+
+.ai-results-title {
+    font-size: 1rem;
+    color: var(--color-accent); /* Используйте ваш акцентный цвет */
+    margin-bottom: 15px;
+}
+
+.found-articles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.found-article-item {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+}
+
+.found-article-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--text-muted);
+}
+
+.found-article-item h5 {
+    margin: 0 0 5px 0;
+    font-size: 1rem;
+    color: var(--text-bright);
+}
+
+.found-article-item p {
+    margin: 0 0 10px 0;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.found-article-item span {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--color-accent);
+}
+
+.ai-divider {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: 15px 0;
+}
+
+.ai-no-results {
+    text-align: center;
+}
+
+.ai-no-results p {
+    margin-bottom: 15px;
+    color: var(--text-muted);
+}
+
+.chat-suggest-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: transparent;
+    border: 1px solid var(--text-muted);
+    color: var(--text-bright);
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.chat-suggest-btn:hover {
+    background-color: var(--text-bright);
+    color: var(--bg-main);
+}
+
+.chat-suggest-btn.primary {
+    background-color: var(--text-bright);
+    color: var(--bg-main);
+    border: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
