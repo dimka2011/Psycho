@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 import uuid
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email,  password, **extra_fields):
+    def create_user(self,  password, email=None, **extra_fields):
         if not password: return ValueError(_('The given password must be set'))
         if email:
             email = self.normalize_email(email)
@@ -15,7 +15,7 @@ class CustomUserManager(BaseUserManager):
             user.save()
             return user
         
-        token = uuid.uuid4.hex[::10]
+        token = uuid.uuid4().hex[::10]
         user = self.model(token=token, password=password, **extra_fields)
         user.set_password(password)
         user.save()
@@ -35,7 +35,7 @@ class CustomUserManager(BaseUserManager):
 class User(AbstractUser):
     username = None
     token = models.CharField(max_length=200, unique=True)
-    email = models.EmailField('email', unique=True)
+    email = models.EmailField('email', unique=True, null=True, blank=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     objects = CustomUserManager()

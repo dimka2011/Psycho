@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import AllowAny
-from .models import User
+from .models import User, CustomUserManager
 from .serializers import UserSerializer # Убедитесь, что он есть
 import uuid
 
@@ -24,24 +24,22 @@ class RegisterStudentView(APIView):
         try:
             # Генерируем уникальный токен (как в вашей модели: uuid hex укороченный)
             # Используем цикл для гарантии уникальности
-            token = uuid.uuid4().hex[:10]
-            while User.objects.filter(token=token).exists():
-                token = uuid.uuid4().hex[:10]
+            # token = uuid.uuid4().hex[:10]
+            # while User.objects.filter(token=token).exists():
+            #     token = uuid.uuid4().hex[:10]
 
             # Создаем пользователя
             # Email оставляем пустым или генерируем фейковый, если он обязателен в вашей БД
             # (В вашей модели email уникален, поэтому если он обязателен, придется генерировать уникальную заглушку)
-            fake_email = f"{token}@student.asp" 
             
             user = User.objects.create_user(
-                email=fake_email, 
                 password=password,
-                token=token
+                # token=token
             )
             
             # Возвращаем токен, чтобы показать его ученику
             return Response({
-                "token": token,
+                "token": user.token,
                 "detail": "Аккаунт успешно создан."
             }, status=status.HTTP_201_CREATED)
 
