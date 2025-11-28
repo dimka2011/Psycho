@@ -27,6 +27,13 @@ const Navbar = () => {
 
                     </>
                 )}
+            {!isPsychologist && (
+                    <>
+                        <Link to="/articles" className="nav-link">Статьи</Link>
+                        <Link to="/chat" className="nav-link">Чат с психологом</Link>
+
+                    </>
+                )}
                 
                 {/* Условная кнопка входа/выхода */}
                 {user ? (

@@ -24,9 +24,9 @@ body, html {
   font-family: var(--font-main);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden; /* Предотвращает горизонтальную прокрутку */
 }
 
-/* Общие стили для кнопок, чтобы они были одинаковыми везде */
 button {
   font-family: var(--font-main);
   border: none;
@@ -34,22 +34,21 @@ button {
   cursor: pointer;
 }
 
-/* Убираем дефолтное подчеркивание ссылок */
 a {
   text-decoration: none;
   color: inherit;
 }
-/* ... твои предыдущие стили в index.css ... */
 
 /* Layout для всего приложения */
 .app-layout {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Занимаем минимум всю высоту экрана */
+    min-height: 100vh;
 }
 
 .content-wrap {
-    flex: 1; /* Заставляет контент занимать всё доступное место, толкая футер вниз */
+    flex: 1;
     display: flex;
-    flex-direction: column; /* Чтобы вложенные страницы тоже могли использовать flex */
+    flex-direction: column;
+    width: 100%; /* Гарантируем, что контент не вылезет */
 }

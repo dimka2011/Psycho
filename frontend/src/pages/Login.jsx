@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext'; // ⬅️ Импорт useAuth
 import '../styles/Login.css';
 
 const Login = () => {
+    // Внимание: для учеников здесь нужно вводить КОД, который на бэкенде преобразуется в email
     const [username, setUsername] = useState(''); 
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -20,7 +21,11 @@ const Login = () => {
             navigate('/', { replace: true }); 
         }
     }, [user, navigate]);
-
+    
+    // Функция для перенаправления на страницу регистрации ученика
+    const goToChatRegistration = () => {
+        navigate('/register-student');
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,8 +33,9 @@ const Login = () => {
         setError(null);
         
         try {
+            // Здесь мы предполагаем, что бэкенд обрабатывает ввод КОДА (для учеников) или EMAIL (для психологов)
             const response = await api.post("/token/", { 
-                email: username, 
+                email: username, // Передаем то, что ввел пользователь. Бэкенд должен преобразовать КОД в email@student.asp
                 password: password,
             }, { 
                 headers: {
@@ -42,9 +48,7 @@ const Login = () => {
                 localStorage.setItem(ACCESS_TOKEN, accessToken);
                 login(); // Обновляет глобальное состояние AuthContext
                 
-                // КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: ПЕРЕНАПРАВЛЯЕМ ПОЛЬЗОВАТЕЛЯ
-                // После обновления состояния мы командуем браузеру перейти на корень.
-                // Дальше AppRoutes подхватит user=true и перенаправит на Home или Dashboard.
+                // Перенаправляем пользователя на корень, чтобы он попал в чат
                 navigate('/', { replace: true }); 
                 
             } else {
@@ -52,8 +56,7 @@ const Login = () => {
             }
 
         } catch (err) {
-            // ... (обработка ошибок) ...
-             console.error("Ошибка входа:", err);
+            console.error("Ошибка входа:", err);
             if (err.response && err.response.status === 401) {
                 setError("Неверные учетные данные. Проверьте ваш email/код и пароль.");
             } else {
@@ -68,6 +71,7 @@ const Login = () => {
     if (user) {
         return null; 
     }
+    
     return (
         <div className="login-container">
             <div className="login-box">
@@ -76,7 +80,6 @@ const Login = () => {
                 
                 <form onSubmit={handleSubmit} className="login-form">
                     <div className="input-group">
-                        {/* Название поля 'username' здесь - это просто метка, не ключ запроса */}
                         <label htmlFor="username">Email или Код (токен):</label> 
                         <input
                             type="text" 
@@ -112,6 +115,19 @@ const Login = () => {
                         {loading ? 'Проверка данных...' : 'Войти'}
                     </button>
                 </form>
+                
+                {/* НОВЫЙ БЛОК ДЛЯ РЕГИСТРАЦИИ */}
+                <div className="registration-prompt">
+                    <p>Ты школьник и впервые здесь?</p>
+                    <button 
+                        onClick={goToChatRegistration} 
+                        className="register-link-btn"
+                        disabled={loading}
+                    >
+                        Получить анонимный код доступа
+                    </button>
+                </div>
+                
             </div>
         </div>
     );

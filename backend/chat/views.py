@@ -11,6 +11,7 @@ from .permissions import IsPsychologistOrSelf
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from users.models import User
+from .custom_filters import censor
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def initiate_chat(request):
@@ -28,7 +29,8 @@ def initiate_chat(request):
     if not content:
         return Response({"content": "Обязательно поле 'content' (первое сообщение)."}, 
                         status=status.HTTP_400_BAD_REQUEST)
-    
+    if censor(content):
+        return Response(status=status.HTTP_400_BAD_REQUEST)
     # 1. Проверяем, есть ли уже активный чат
     active_chat = Chat.objects.filter(student=user, is_active=True).first()
     if active_chat:
@@ -111,6 +113,8 @@ class ChatViewSet(viewsets.GenericViewSet,
         # Создаем новое сообщение
         serializer = MessageSerializer(data=request.data)
         if serializer.is_valid():
+            if censor(serializer.validated_data.get('content')):
+                return Response(status=status.HTTP_400_BAD_REQUEST)
             # Важно: sender и chat устанавливаются из контекста запроса, а не из данных пользователя
             serializer.save(chat=chat, sender=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)

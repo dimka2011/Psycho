@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 import uuid
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self,  password, email=None, **extra_fields):
+    def create_user(self,  email=None, password=None,  **extra_fields):
         if not password: return ValueError(_('The given password must be set'))
         if email:
             email = self.normalize_email(email)

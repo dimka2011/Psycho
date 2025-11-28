@@ -90,7 +90,8 @@ const StudentChat = () => {
             }]);
             setContent('');
         } catch (err) {
-            alert(err.response?.data?.detail || "Ошибка при инициализации чата.");
+            // Улучшенная обработка ошибок для показа конкретной причины
+            alert(err.response?.data?.detail || "Ошибка при инициализации чата. Проверьте отсутствие ненормативной лексики.");
             console.error(err);
         } finally {
             setIsInitiating(false);
@@ -117,9 +118,12 @@ const StudentChat = () => {
         
         try {
             await api.post(`/v1/chats/${chatId}/send_message/`, { content: messageContent });
+            // Сообщения будут обновлены через polling, и is_sending исчезнет.
         } catch (err) {
-            alert("Не удалось отправить сообщение.");
+            // ⬅️ ИЗМЕНЕНИЕ: Показ конкретной ошибки с бэкенда (например, о цензуре)
+            alert(err.response?.data?.detail || "Не удалось отправить сообщение. Проверьте отсутствие ненормативной лексики");
             console.error(err);
+            // Удаляем временное сообщение при ошибке
             setMessages(prev => prev.filter(msg => msg.id !== tempMessage.id)); 
         }
     };
@@ -170,7 +174,6 @@ const StudentChat = () => {
                 {messages.map((msg) => (
                     <div 
                         key={msg.id} 
-                        // ⬅️ Используем двойное равно для сравнения ID
                         className={`message-bubble ${msg.sender_id == user.id ? 'sent' : 'received'}`}
                     >
                         <span className="message-time">
@@ -188,7 +191,7 @@ const StudentChat = () => {
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
                     placeholder="Напишите ответ..."
-                    rows="2" // Внешняя высота теперь задается через CSS min-height
+                    rows="2"
                     required
                 />
                 <button type="submit" disabled={!content.trim()}>

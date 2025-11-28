@@ -1,22 +1,22 @@
-/* --- 1. Основной контейнер (asp-navbar) --- */
+/* --- 1. Основной контейнер --- */
 .asp-navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 40px;
+    padding: 15px 40px;
     border-bottom: 1px solid var(--border);
-    background-color: var(--bg-main); /* Используем ваш фон */
+    background-color: var(--bg-main);
     position: sticky;
     top: 0;
     z-index: 100;
 }
 
-/* --- 2. Логотип (logo-wrapper) --- */
+/* --- 2. Логотип --- */
 .logo-wrapper {
     display: flex;
     align-items: center;
     gap: 15px;
-    cursor: pointer; /* Добавлено, т.к. используется navigate('/') */
+    cursor: pointer;
 }
 
 .logo-acronym {
@@ -37,41 +37,39 @@
     display: none; 
 }
 
-/* --- 3. Контейнер ссылок (nav-links) --- */
+/* --- 3. Контейнер ссылок --- */
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 25px; /* Промежуток между ссылками/кнопками */
+    gap: 25px;
 }
 
-/* --- 4. Ссылки навигации (nav-link) --- */
+/* --- 4. Ссылки навигации --- */
 .nav-link {
     color: var(--text-muted);
     text-decoration: none;
     font-size: 1rem;
     font-weight: 500;
     transition: color 0.2s;
-    padding: 8px 0; /* Немного padding для удобства */
+    padding: 5px 0;
 }
 
 .nav-link:hover {
     color: var(--text-bright);
 }
 
-/* --- 5. Общий стиль кнопок (nav-btn) --- */
+/* --- 5. Кнопки --- */
 .nav-btn {
-    /* Базовые стили для кнопок, чтобы они выглядели одинаково */
     font-size: 0.9rem;
     font-weight: 600;
-    padding: 10px 25px;
+    padding: 8px 20px;
     border-radius: 4px;
     transition: all 0.3s ease;
     cursor: pointer;
+    white-space: nowrap; /* Текст кнопки не переносится */
 }
 
-/* --- 6. Кнопка Вход (login-btn) --- */
 .login-btn {
-    /* Стили, которые вы предоставили */
     background: transparent;
     color: var(--text-bright);
     border: 1px solid var(--border);
@@ -83,10 +81,9 @@
     color: var(--bg-main);
 }
 
-/* --- 7. Кнопка Выход (logout-btn) --- */
 .logout-btn {
     background: transparent;
-    color: #e74c3c; /* Акцентный красный */
+    color: #e74c3c;
     border: 1px solid #e74c3c;
 }
 
@@ -96,7 +93,6 @@
     border-color: #e74c3c;
 }
 
-
 /* --- 8. Адаптивность --- */
 @media (min-width: 768px) {
     .logo-full { 
@@ -105,7 +101,6 @@
 }
 
 @media (max-width: 850px) {
-    /* Уменьшаем пробелы и отступы на средних экранах */
     .asp-navbar {
         padding: 15px 20px;
     }
@@ -118,13 +113,27 @@
 }
 
 @media (max-width: 600px) {
-    /* Скрываем ссылки психолога на очень маленьких экранах, оставляя только кнопки */
-    /* Предполагаем, что на дашборд можно попасть, перейдя на корень, а создавать статьи лучше с десктопа */
-    .nav-links .nav-link {
-        display: none; 
+    .asp-navbar {
+        padding: 10px 15px;
     }
     
     .logo-acronym {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
+        padding: 3px 6px;
+    }
+
+    .nav-links {
+        gap: 10px;
+    }
+
+    /* На мобильных уменьшаем кнопки и отступы */
+    .nav-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+    
+    /* Ссылки делаем меньше, но не скрываем */
+    .nav-link {
+        font-size: 0.8rem;
     }
 }

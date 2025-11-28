@@ -1,5 +1,5 @@
 .asp-footer {
-    margin-top: auto; /* Это заставляет футер прижиматься к низу */
+    margin-top: auto;
     padding: 30px 20px;
     background-color: var(--bg-main);
     border-top: 1px solid var(--border);
@@ -33,6 +33,8 @@
     display: flex;
     gap: 10px;
     align-items: center;
+    flex-wrap: wrap; /* Разрешаем перенос ссылок */
+    justify-content: center;
 }
 
 .footer-links a {
@@ -47,4 +49,18 @@
 
 .separator {
     color: #333;
+}
+
+/* Адаптив для футера */
+@media (max-width: 500px) {
+    .footer-links {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .separator {
+        display: none; /* Скрываем точки-разделители на мобильном */
+    }
+    .asp-footer {
+        padding: 20px;
+    }
 }

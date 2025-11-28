@@ -1,4 +1,3 @@
-/* Общая разметка страницы */
 .articles-page {
     padding: 40px 20px;
     max-width: 1200px;
@@ -6,7 +5,6 @@
     width: 100%;
 }
 
-/* Хедер страницы */
 .articles-header {
     margin-bottom: 60px;
     text-align: center;
@@ -15,92 +13,26 @@
     align-items: center;
 }
 
-.page-title {
-    font-size: 3rem;
-    font-weight: 800;
-    margin-bottom: 10px;
-}
-
-.page-subtitle {
-    color: var(--text-muted);
-    max-width: 600px;
-    margin-bottom: 40px;
-    font-size: 1.1rem;
-}
-
-/* Поиск */
-.search-container {
-    position: relative;
-    width: 100%;
-    max-width: 600px;
-    margin-bottom: 30px;
-}
-
-.search-input {
-    width: 100%;
-    background-color: var(--bg-panel);
-    border: 1px solid var(--border);
-    padding: 15px 45px 15px 20px;
-    border-radius: 50px; /* Овальная форма */
-    color: var(--text-bright);
-    font-size: 1rem;
-    transition: border-color 0.3s, box-shadow 0.3s;
-    outline: none;
-}
-
-.search-input:focus {
-    border-color: var(--text-bright);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
-}
-
-.search-icon {
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 0.5;
-    pointer-events: none;
-}
-
-/* Фильтр тегов */
-.tags-filter {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-}
-
-.filter-tag {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    padding: 8px 20px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-size: 0.9rem;
-}
-
-.filter-tag:hover {
-    border-color: var(--text-bright);
-    color: var(--text-bright);
-}
-
-.filter-tag.active {
-    background-color: var(--text-bright);
-    color: var(--bg-main);
-    border-color: var(--text-bright);
-    font-weight: 600;
-}
+/* ... (стили поиска и фильтров) ... */
+.page-title { font-size: 3rem; font-weight: 800; margin-bottom: 10px; }
+.page-subtitle { color: var(--text-muted); max-width: 600px; margin-bottom: 40px; font-size: 1.1rem; }
+.search-container { position: relative; width: 100%; max-width: 600px; margin-bottom: 30px; }
+.search-input { width: 100%; background-color: var(--bg-panel); border: 1px solid var(--border); padding: 15px 45px 15px 20px; border-radius: 50px; color: var(--text-bright); font-size: 1rem; transition: border-color 0.3s, box-shadow 0.3s; outline: none; }
+.search-input:focus { border-color: var(--text-bright); box-shadow: 0 0 15px rgba(255, 255, 255, 0.1); }
+.search-icon { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); opacity: 0.5; pointer-events: none; }
+.tags-filter { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.filter-tag { background: transparent; border: 1px solid var(--border); color: var(--text-muted); padding: 8px 20px; border-radius: 20px; cursor: pointer; transition: all 0.2s; font-size: 0.9rem; }
+.filter-tag:hover { border-color: var(--text-bright); color: var(--text-bright); }
+.filter-tag.active { background-color: var(--text-bright); color: var(--bg-main); border-color: var(--text-bright); font-weight: 600; }
 
 /* Сетка карточек */
 .articles-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    /* Уменьшил minmax до 280px для лучшего поведения на узких экранах */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 30px;
 }
 
-/* Карточка статьи */
 .article-card {
     background-color: var(--bg-panel);
     border: 1px solid var(--border);
@@ -112,90 +44,34 @@
     flex-direction: column;
     position: relative;
 }
-
-.article-card:hover {
-    transform: translateY(-5px);
-    border-color: #444;
-}
-
-/* Цветные полоски категорий (визуальный код) */
-.card-top-line {
-    height: 4px;
-    width: 100%;
-}
-.category-study { background-color: #3498db; } /* Синий */
-.category-social { background-color: #e74c3c; } /* Красный */
-.category-family { background-color: #f1c40f; } /* Желтый */
-.category-health { background-color: #2ecc71; } /* Зеленый */
-.category-self { background-color: #9b59b6; }   /* Фиолетовый */
-
-.card-body {
-    padding: 25px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.card-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 15px;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-}
-
-.card-tags span {
-    margin-left: 8px;
-    color: #777;
-}
-
-.card-title {
-    margin: 0 0 15px 0;
-    font-size: 1.4rem;
-    line-height: 1.3;
-}
-
-.card-excerpt {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 25px;
-    flex-grow: 1;
-}
-
-.read-more-link {
-    background: none;
-    border: none;
-    color: var(--text-bright);
-    text-align: left;
-    padding: 0;
-    font-weight: 600;
-    font-size: 0.9rem;
-    align-self: flex-start;
-}
-
-.article-card:hover .read-more-link {
-    text-decoration: underline;
-}
-
-/* Состояние "Ничего не найдено" */
-.no-results {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 50px;
-    color: var(--text-muted);
-    border: 1px dashed var(--border);
-    border-radius: 12px;
-}
+/* ... (стили карточки без изменений) ... */
+.article-card:hover { transform: translateY(-5px); border-color: #444; }
+.card-top-line { height: 4px; width: 100%; }
+.category-study { background-color: #3498db; }
+.category-social { background-color: #e74c3c; }
+.category-family { background-color: #f1c40f; }
+.category-health { background-color: #2ecc71; }
+.category-self { background-color: #9b59b6; }
+.card-body { padding: 25px; display: flex; flex-direction: column; flex-grow: 1; }
+.card-meta { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; font-size: 0.8rem; color: var(--text-muted); }
+.card-tags span { margin-left: 8px; color: #777; }
+.card-title { margin: 0 0 15px 0; font-size: 1.4rem; line-height: 1.3; }
+.card-excerpt { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px; flex-grow: 1; }
+.read-more-link { background: none; border: none; color: var(--text-bright); text-align: left; padding: 0; font-weight: 600; font-size: 0.9rem; align-self: flex-start; }
+.article-card:hover .read-more-link { text-decoration: underline; }
+.no-results { grid-column: 1 / -1; text-align: center; padding: 50px; color: var(--text-muted); border: 1px dashed var(--border); border-radius: 12px; }
 
 /* Адаптив */
 @media (max-width: 768px) {
     .page-title {
         font-size: 2rem;
     }
-    
+    .articles-header {
+        margin-bottom: 30px;
+    }
     .articles-grid {
+        gap: 20px;
+        /* На планшетах и мобильных колонка одна */
         grid-template-columns: 1fr;
     }
 }

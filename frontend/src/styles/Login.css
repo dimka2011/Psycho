@@ -1,3 +1,12 @@
+:root {
+    --bg-main: #0d1218; 
+    --bg-panel: #1a232f; 
+    --border: #334455;
+    --text-bright: #e0e6ed;
+    --text-muted: #95a5bb;
+    --color-accent: #3498db; /* Новый акцентный цвет для кнопки регистрации */
+}
+
 .login-container {
     min-height: 80vh; 
     display: flex;
@@ -52,7 +61,7 @@
 .login-form input {
     width: 100%;
     padding: 12px;
-    background-color: #1a1a1a;
+    background-color: var(--bg-main);
     border: 1px solid #333;
     border-radius: 4px;
     color: var(--text-bright);
@@ -62,7 +71,7 @@
 }
 
 .login-form input:focus {
-    border-color: var(--text-bright);
+    border-color: var(--color-accent);
 }
 
 .login-error {
@@ -97,6 +106,47 @@
     opacity: 0.6;
     cursor: not-allowed;
 }
+
+/* --- СТИЛИ ДЛЯ РЕГИСТРАЦИИ --- */
+.registration-prompt {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border); 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.registration-prompt p {
+    color: var(--text-muted);
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+}
+
+.register-link-btn {
+    background: none;
+    border: 2px solid var(--color-accent); 
+    color: var(--color-accent);
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    width: 100%;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.register-link-btn:hover:not(:disabled) {
+    background-color: var(--color-accent);
+    color: var(--bg-panel);
+}
+
+.register-link-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+/* --- КОНЕЦ СТИЛЕЙ РЕГИСТРАЦИИ --- */
+
 
 /* Адаптив */
 @media (max-width: 500px) {

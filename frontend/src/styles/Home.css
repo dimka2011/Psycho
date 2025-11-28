@@ -161,6 +161,7 @@
     font-weight: 700;
     font-size: 1rem;
     transition: transform 0.2s ease;
+    border-radius: 4px;
 }
 
 .action-btn.primary {
@@ -193,34 +194,7 @@
     color: var(--bg-main);
 }
 
-/* Футер */
-.asp-footer {
-    margin-top: auto;
-    padding: 30px;
-    text-align: center;
-    color: #333;
-    font-size: 0.8rem;
-    border-top: 1px solid #111;
-}
-
-/* Адаптив */
-@media (max-width: 900px) {
-    .interface-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .main-title {
-        font-size: 2rem;
-    }
-    
-    .asp-navbar {
-        padding: 15px 20px;
-    }
-    
-    .interface-block {
-        padding: 25px;
-    }
-}
+/* --- Результаты ИИ --- */
 .ai-results-area {
     margin-top: 25px;
     padding-top: 20px;
@@ -315,4 +289,52 @@
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- АДАПТИВ ДЛЯ HOME --- */
+@media (max-width: 900px) {
+    .interface-grid {
+        grid-template-columns: 1fr; /* Переключаемся на одну колонку */
+        gap: 30px;
+    }
+    
+    .main-title {
+        font-size: 2.2rem;
+    }
+    
+    .asp-content {
+        padding: 30px 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .main-title {
+        font-size: 1.8rem;
+    }
+    
+    .sub-title {
+        font-size: 1rem;
+    }
+
+    .interface-block {
+        padding: 25px; /* Уменьшаем отступы внутри карточек */
+    }
+    
+    .form-controls {
+        flex-direction: column; /* Кнопку и статус ставим друг под другом */
+        align-items: stretch;
+        gap: 15px;
+    }
+    
+    .status-indicator {
+        justify-content: center;
+    }
+    
+    .action-btn {
+        width: 100%; /* Кнопка на всю ширину */
+    }
+    
+    .asp-form textarea {
+        min-height: 150px; /* Немного уменьшаем высоту текстового поля */
+    }
 }
